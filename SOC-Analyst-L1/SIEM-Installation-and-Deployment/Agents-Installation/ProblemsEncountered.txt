@@ -1,0 +1,6 @@
+Problème 0 : aucune connexion sur ma VM Ubuntu après un son installation
+
+Alors ici la commande ipconfig ne fonctionnait pas j'ai du :
+	1- effectuer la mise à jour de ma VM 
+	2- exécuter la commande "apt install net-tools" pour installer tous les packages réseau
+	3- j'ai testé que tout est bon avec la commande "ifconfig"
