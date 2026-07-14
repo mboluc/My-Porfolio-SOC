@@ -14,7 +14,7 @@ Since the `ipconfig` command wasn't working here, I had to:
 
 Symptom: After switching the Ubuntu VM to the VMnet8 virtual switch to segment my network and assign it a static IP address, the machine lost all Internet access, making it impossible to update packages or download security agents.
 
-Analysis: VMware's VMnet8 network uses NAT mode, which includes a virtual gateway by default to route traffic to the outside. The blockage was caused by an internal configuration error in the VM's network file (***/etc/netplan/01-network-manager-all.yaml*): I had instinctively set the gateway to the .1 address, whereas the VMware hypervisor assigns the .2 address to its virtual NAT gateway by default. As a result, packets destined for the Internet could not find an exit path.
+Analysis: VMware's VMnet8 network uses NAT mode, which includes a virtual gateway by default to route traffic to the outside. The blockage was caused by an internal configuration error in the VM's network file (***/etc/netplan/01-network-manager-all.yaml***): I had instinctively set the gateway to the .1 address, whereas the VMware hypervisor assigns the .2 address to its virtual NAT gateway by default. As a result, packets destined for the Internet could not find an exit path.
 
 Solution: To maintain logical isolation from the other machines in the lab while retaining access to the update repositories, I corrected the network configuration of the Ubuntu VM. I aligned its static IP address with the VMnet8 range and corrected the routing directive by replacing the incorrect gateway with the exact IP address of the VMware NAT component (192.168.X.2). After applying the changes (***netplan apply***), external connectivity was immediately restored
 
